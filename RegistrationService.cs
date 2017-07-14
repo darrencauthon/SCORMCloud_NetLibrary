@@ -566,9 +566,9 @@ namespace RusticiSoftware.HostedEngine.Client
         /// <param name="registrationId">Unique Identifier for the registration</param>
         /// <param name="redirectOnExitUrl">Upon exit, the url that the SCORM player will redirect to</param>
         /// <param name="cssUrl">Absolute url that points to a custom player style sheet</param>
-        /// <param name="debugLogPointerUrl">Url that the server will postback a "pointer" url regarding
+        /// <param name="debugLogPointerUrl">Url that the server will postback a "pointer" url regarding</param>
         /// <param name="player">Launch using alternative players like "modern"</param>
-        /// <param name="forceFrameSet">Force course to launch using frameset (needed to play in mobile webview)</param>
+        /// <param name="forceFrameset">Force course to launch using frameset (needed to play in mobile webview)</param>
         /// <returns>URL to launch</returns>
         public string GetLaunchUrl(string registrationId, string redirectOnExitUrl, string cssUrl, string debugLogPointerUrl, string player, string forceFrameset)
         {
