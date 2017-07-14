@@ -110,8 +110,8 @@ namespace RusticiSoftware.HostedEngine.Client
         /// <param name="postBackLoginPassword">If postback authentication is used, the password</param>
         /// <param name="resultsFormat">The Format of the results XML sent to the postback URL</param>
         public void UpdatePostbackInfo(string registrationId, string resultsPostbackUrl,
-            string postBackLoginName, string postBackLoginPassword, RegistrationResultsAuthType authType,
-            RegistrationResultsFormat resultsFormat)
+          string postBackLoginName, string postBackLoginPassword, RegistrationResultsAuthType authType,
+          RegistrationResultsFormat resultsFormat)
         {
             ServiceRequest request = new ServiceRequest(configuration);
             request.Parameters.Add("regid", registrationId);
