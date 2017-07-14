@@ -177,10 +177,10 @@ namespace RusticiSoftware.HostedEngine.Client
         /// <param name="courseTags">A comma separated list of course tags to associate with this registration</param>
         /// <param name="registrationTags">A comma separated list of tags to associate with this registration</param>
         public void CreateRegistration(string registrationId, string courseId, int versionId, string learnerId,
-            string learnerFirstName, string learnerLastName, string resultsPostbackUrl,
-            RegistrationResultsAuthType authType, string postBackLoginName, string postBackLoginPassword,
-            RegistrationResultsFormat resultsFormat,
-            string learnerTags, string courseTags, string registrationTags)
+          string learnerFirstName, string learnerLastName, string resultsPostbackUrl,
+          RegistrationResultsAuthType authType, string postBackLoginName, string postBackLoginPassword,
+          RegistrationResultsFormat resultsFormat,
+          string learnerTags, string courseTags, string registrationTags)
         {
             ServiceRequest request = new ServiceRequest(configuration);
             request.Parameters.Add("regid", registrationId);
