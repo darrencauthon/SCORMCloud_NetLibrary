@@ -110,8 +110,8 @@ namespace RusticiSoftware.HostedEngine.Client
         /// <param name="postBackLoginPassword">If postback authentication is used, the password</param>
         /// <param name="resultsFormat">The Format of the results XML sent to the postback URL</param>
         public void UpdatePostbackInfo(string registrationId, string resultsPostbackUrl,
-          string postBackLoginName, string postBackLoginPassword, RegistrationResultsAuthType authType,
-          RegistrationResultsFormat resultsFormat)
+            string postBackLoginName, string postBackLoginPassword, RegistrationResultsAuthType authType,
+            RegistrationResultsFormat resultsFormat)
         {
             ServiceRequest request = new ServiceRequest(configuration);
             request.Parameters.Add("regid", registrationId);
@@ -177,10 +177,10 @@ namespace RusticiSoftware.HostedEngine.Client
         /// <param name="courseTags">A comma separated list of course tags to associate with this registration</param>
         /// <param name="registrationTags">A comma separated list of tags to associate with this registration</param>
         public void CreateRegistration(string registrationId, string courseId, int versionId, string learnerId,
-          string learnerFirstName, string learnerLastName, string resultsPostbackUrl,
-          RegistrationResultsAuthType authType, string postBackLoginName, string postBackLoginPassword,
-          RegistrationResultsFormat resultsFormat,
-          string learnerTags, string courseTags, string registrationTags)
+            string learnerFirstName, string learnerLastName, string resultsPostbackUrl,
+            RegistrationResultsAuthType authType, string postBackLoginName, string postBackLoginPassword,
+            RegistrationResultsFormat resultsFormat,
+            string learnerTags, string courseTags, string registrationTags)
         {
             ServiceRequest request = new ServiceRequest(configuration);
             request.Parameters.Add("regid", registrationId);
@@ -518,7 +518,7 @@ namespace RusticiSoftware.HostedEngine.Client
         /// <returns>URL to launch</returns>
         public string GetLaunchUrl(string registrationId, string redirectOnExitUrl)
         {
-            return GetLaunchUrl(registrationId, redirectOnExitUrl, null, null);
+            return GetLaunchUrl(registrationId, redirectOnExitUrl, null, null, null, null);
         }
 
         /// <summary>
@@ -530,7 +530,7 @@ namespace RusticiSoftware.HostedEngine.Client
         /// <returns>URL to launch</returns>
         public string GetLaunchUrl(string registrationId, string redirectOnExitUrl, string cssUrl)
         {
-            return GetLaunchUrl(registrationId, redirectOnExitUrl, cssUrl, null);
+            return GetLaunchUrl(registrationId, redirectOnExitUrl, cssUrl, null, null, null);
         }
 
         /// <summary>
@@ -538,10 +538,39 @@ namespace RusticiSoftware.HostedEngine.Client
         /// </summary>
         /// <param name="registrationId">Unique Identifier for the registration</param>
         /// <param name="redirectOnExitUrl">Upon exit, the url that the SCORM player will redirect to</param>
-        /// <returns>URL to launch</returns>
+        /// <param name="cssUrl">Absolute url that points to a custom player style sheet</param>
         /// <param name="debugLogPointerUrl">Url that the server will postback a "pointer" url regarding
-        /// a saved debug log that resides on s3</param>
+        /// <returns>URL to launch</returns>
         public string GetLaunchUrl(string registrationId, string redirectOnExitUrl, string cssUrl, string debugLogPointerUrl)
+        {
+            return GetLaunchUrl(registrationId, redirectOnExitUrl, cssUrl, debugLogPointerUrl, null, null);
+        }
+
+        /// <summary>
+        /// Gets the url to directly launch/view the course registration in a browser
+        /// </summary>
+        /// <param name="registrationId">Unique Identifier for the registration</param>
+        /// <param name="redirectOnExitUrl">Upon exit, the url that the SCORM player will redirect to</param>
+        /// <param name="cssUrl">Absolute url that points to a custom player style sheet</param>
+        /// <param name="debugLogPointerUrl">Url that the server will postback a "pointer" url regarding</param>
+        /// <param name="player">Launch using alternative players like "modern"</param>
+        /// <returns>URL to launch</returns>
+        public string GetLaunchUrl(string registrationId, string redirectOnExitUrl, string cssUrl, string debugLogPointerUrl, string player)
+        {
+            return GetLaunchUrl(registrationId, redirectOnExitUrl, cssUrl, debugLogPointerUrl, player, null);
+        }
+
+        /// <summary>
+        /// Gets the url to directly launch/view the course registration in a browser
+        /// </summary>
+        /// <param name="registrationId">Unique Identifier for the registration</param>
+        /// <param name="redirectOnExitUrl">Upon exit, the url that the SCORM player will redirect to</param>
+        /// <param name="cssUrl">Absolute url that points to a custom player style sheet</param>
+        /// <param name="debugLogPointerUrl">Url that the server will postback a "pointer" url regarding
+        /// <param name="player">Launch using alternative players like "modern"</param>
+        /// <param name="forceFrameSet">Force course to launch using frameset (needed to play in mobile webview)</param>
+        /// <returns>URL to launch</returns>
+        public string GetLaunchUrl(string registrationId, string redirectOnExitUrl, string cssUrl, string debugLogPointerUrl, string player, string forceFrameset)
         {
             ServiceRequest request = new ServiceRequest(configuration);
             request.Parameters.Add("regid", registrationId);
@@ -551,6 +580,10 @@ namespace RusticiSoftware.HostedEngine.Client
                 request.Parameters.Add("cssurl", cssUrl);
             if (!String.IsNullOrEmpty(debugLogPointerUrl))
                 request.Parameters.Add("saveDebugLogPointerUrl", debugLogPointerUrl);
+            if (!String.IsNullOrEmpty(player))
+                request.Parameters.Add("player", player);
+            if (!String.IsNullOrEmpty(forceFrameset))
+                request.Parameters.Add("forceFrameset", forceFrameset);
 
             return request.ConstructUrl("rustici.registration.launch");
         }
